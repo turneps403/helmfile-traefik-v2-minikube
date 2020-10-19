@@ -1,0 +1,19 @@
+repositories:
+- name: traefik
+  url: https://helm.traefik.io/traefik
+
+
+releases:
+- name: mytraefik
+  chart: traefik/traefik
+  namespace: traefikns
+  createNamespace: true
+  values:
+    - ./values/mytraefik.yaml
+
+- name: application
+  chart: ./charts/application
+  namespace: app
+  createNamespace: true
+  values:
+    - ./values/application.yaml

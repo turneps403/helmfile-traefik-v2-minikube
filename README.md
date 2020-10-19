@@ -27,7 +27,7 @@ Enable the loadbalander with minikube:
 
 ```bash
 minikube service list
-minikube service traefik
+minikube service mytraefik -n traefikns
 ```
 
 Open the URL in your browser, eg. <http://192.168.39.124:32118>.
