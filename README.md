@@ -5,8 +5,8 @@ Example of working with Traefik middleware
 ## Installation & Run
 Checkout
 ```
-$ git clone https://github.com/turneps403/traefik-v2-minikube.git
-$ cd traefik-v2-minikube
+$ git clone https://github.com/turneps403/helmfile-traefik-v2-minikube.git
+$ cd helmfile-traefik-v2-minikube
 ```
 Start minikube
 ```
