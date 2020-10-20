@@ -29,9 +29,9 @@ Add path `/whoami` to url of any of opened tabs, check answer (header `X-Custom-
 
 
 Checking Traefik dashboard:
-0. enable nginx ingress (native for minikube)
-1. add minikube ip to `/etc/hosts` with predefined domain
-2. check dashboard on `http://traefik-ui.minikube/dashboard/`
+* enable nginx ingress (native for minikube)
+* add minikube ip to `/etc/hosts` with predefined domain
+* check dashboard on `http://traefik-ui.minikube/dashboard/`
 ```
 $ minikube addons enable ingress
 $ echo "$(minikube ip) traefik-ui.minikube" | sudo tee -a /etc/hosts
