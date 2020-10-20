@@ -1,14 +1,29 @@
-# dashboard.yaml
-apiVersion: traefik.containo.us/v1alpha1
-kind: IngressRoute
+apiVersion: v1
+kind: Service
 metadata:
-  name: dashboard
+  name: traefik-web-ui
+  # namespace: kube-system
 spec:
-  entryPoints:
-    - web
-  routes:
-    - match: (PathPrefix(`/dashboard`) || PathPrefix(`/api`))
-      kind: Rule
-      services:
-        - name: api@internal
-          kind: TraefikService
+  selector:
+    app.kubernetes.io/name: traefik
+  ports:
+  - name: web
+    port: 80
+    targetPort: 9000
+---
+apiVersion: extensions/v1beta1
+kind: Ingress
+metadata:
+  name: traefik-web-ui
+  # namespace: kube-system
+spec:
+  rules:
+  - host: traefik-ui.minikube
+    # http://traefik-ui.minikube/dashboard/#/   <-- echo "$(minikube ip) traefik-ui.minikube" | sudo tee -a /etc/hosts
+    # plus enable addon ingress
+    http:
+      paths:
+      - path: /
+        backend:
+          serviceName: traefik-web-ui
+          servicePort: web

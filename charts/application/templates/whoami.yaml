@@ -54,6 +54,7 @@ spec:
     - web
     - websecure
   routes:
+      # "Host(`traefik.example.com`) && (PathPrefix(`/api`) || PathPrefix(`/dashboard`))"
     - match: PathPrefix(`/whoami`)
       kind: Rule
       services:
