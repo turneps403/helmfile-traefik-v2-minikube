@@ -5,7 +5,7 @@ repositories:
 
 releases:
 - name: mytraefik
-  chart: traefik/traefik
+  chart: ./charts/mytraefik
   namespace: traefikns
   createNamespace: true
   values:
@@ -15,5 +15,3 @@ releases:
   chart: ./charts/application
   namespace: app
   createNamespace: true
-  values:
-    - ./values/application.yaml

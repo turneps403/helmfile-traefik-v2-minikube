@@ -1,6 +1,6 @@
-# Traefik Ingress Controller with minikube
+# Traefik V2 with minikube
 
-Experiment with Traefik locally via minikube.
+Example of working with Traefik middleware
 
 ![dashboard.png](dashboard.png)
 
@@ -13,47 +13,47 @@ Experiment with Traefik locally via minikube.
 * Setup Traefik 2.1 [Guide](https://ralph.blog.imixs.com/2020/02/01/kubernetes-setup-traefik-2-1/)
 * Traefik 2.2 on [GCE](https://github.com/codeaprendiz/kubernetes-kitchen/tree/master/gcp/task-005-traefik-whoami)
 
-## Installation
-
-Setup minikube with additional resources: `minikube start --cpus 4 --memory 8192`
-
-Install the Traefik Helm chart and deploy the dashboard:
-
-```bash
-./install.sh
+## Installation & Run
+Checkout
 ```
-
-Enable the loadbalander with minikube:
-
-```bash
-minikube service list
-minikube service mytraefik -n traefikns
+$ git clone https://github.com/turneps403/traefik-v2-minikube.git
+$ cd traefik-v2-minikube
 ```
-
-Open the URL in your browser, eg. <http://192.168.39.124:32118>.
-
-The dashboard is located (as defined in`dashboard.yaml`) at <http://192.168.39.124:32118/dashboard/> (the last `/`is really important, otherwise you will get a 404).
-
-## Deploy a demo app
-
-In the examples folder there are some demo services.
-
-Deploy the whoami service with:
-
-```bash
-kubectl apply -f examples/04-whoami.yaml
+Start minikube
 ```
+$ minikube start --memory=8192 --cpus=2 --vm=true
+```
+Apply all manifests and check what you get
+```
+$ helmfile sync
+$ kubectl get all --all-namespaces
+```
+Check list of avaliable services and start `traefikns` with browser
+```
+$ minikube service list
+$ minikube service mytraefik --namespace=traefikns
+```
+![services](static/services.png)
+Add path `/whoami` to url of any of opened tabs, check answer and response headers. That's result of middleware working.
+![response](response/services.png)
+![headers](static/headers.png)
 
-Access it with: <http://192.168.39.124:32118/whoami/>
 
-The echoserver can be accessed at: <http://192.168.39.124:31570/echoserver>
+Checking Traefik dashboard:
+0. enable nginx ingress (native for minikube)
+1. add minikube ip to `/etc/hosts` with predefined domain
+2. check dashboard on `http://traefik-ui.minikube/dashboard/`
+```
+$ minikube addons enable ingress
+$ echo "$(minikube ip) traefik-ui.minikube" | sudo tee -a /etc/hosts
+# see result on http://traefik-ui.minikube/dashboard/
+```
+![dashboard](static/dashboard.png)
 
-## Deletion
 
-```bash
-cd examples
-kubectl delete -f .
-cd ..
-kubectl delete -f dashboard.yaml
-helm uninstall traefik
+## Shutdown
+```
+$ helmfile destroy
+$ minikube stop
+$ minikube delete
 ```
