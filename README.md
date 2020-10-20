@@ -2,17 +2,6 @@
 
 Example of working with Traefik middleware
 
-![dashboard.png](dashboard.png)
-
-## Links
-
-* [Traefik enterprise](https://doc.traefik.io/traefik-enterprise/)
-* Can be configured by [Consul](https://www.consul.io/)
-* stable Traefik [Helm Chart](https://github.com/helm/charts/tree/master/stable/traefik) based on v1.7
-* using Traefik [behind an ELB](https://guv.cloud/post/traefik-aws-nlb/)
-* Setup Traefik 2.1 [Guide](https://ralph.blog.imixs.com/2020/02/01/kubernetes-setup-traefik-2-1/)
-* Traefik 2.2 on [GCE](https://github.com/codeaprendiz/kubernetes-kitchen/tree/master/gcp/task-005-traefik-whoami)
-
 ## Installation & Run
 Checkout
 ```
@@ -34,8 +23,8 @@ $ minikube service list
 $ minikube service mytraefik --namespace=traefikns
 ```
 ![services](static/services.png)
-Add path `/whoami` to url of any of opened tabs, check answer and response headers. That's result of middleware working.
-![response](response/services.png)
+Add path `/whoami` to url of any of opened tabs, check answer (header `X-Custom-Request-Name`) and response headers (header `X-Custom-Response-Header`). That's result of middleware `charts/application/templates/whoami-middleware.yaml` working.
+![response](static/response.png)
 ![headers](static/headers.png)
 
 
