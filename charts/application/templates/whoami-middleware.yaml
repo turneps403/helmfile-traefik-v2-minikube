@@ -1,0 +1,10 @@
+apiVersion: traefik.containo.us/v1alpha1
+kind: Middleware
+metadata:
+  name: injected-headers
+spec:
+  headers:
+    customRequestHeaders:
+      X-Custom-Request-Name: "my request value"
+    customResponseHeaders:
+      X-Custom-Response-Header: "my response value"

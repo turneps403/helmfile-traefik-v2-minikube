@@ -33,32 +33,3 @@ spec:
       port: 80
   selector:
     app: whoami
----
-apiVersion: traefik.containo.us/v1alpha1
-kind: Middleware
-metadata:
-  name: test-header
-spec:
-  headers:
-    customRequestHeaders:
-      X-Script-Name: "test"
-    customResponseHeaders:
-      X-Custom-Response-Header: "value"
----
-apiVersion: traefik.containo.us/v1alpha1
-kind: IngressRoute
-metadata:
-  name: whoami-whoami
-spec:
-  entryPoints:
-    - web
-    - websecure
-  routes:
-      # "Host(`traefik.example.com`) && (PathPrefix(`/api`) || PathPrefix(`/dashboard`))"
-    - match: PathPrefix(`/whoami`)
-      kind: Rule
-      services:
-        - name: whoami
-          port: 80
-      middlewares:
-        - name: test-header
